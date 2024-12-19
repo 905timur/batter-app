@@ -18,6 +18,9 @@ The main purpose of Batter is to:
 - **Error Handling**: Provides clear error messages for invalid inputs, permission issues, or unexpected problems.
 - **About Section**: Displays developer information for support.
 
+![Batter Interface](interface.png)
+
+
 ## Prerequisites
 
 - Python 3.6 or higher
