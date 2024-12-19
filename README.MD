@@ -25,7 +25,7 @@ The main purpose of Batter is to:
 
 - Python 3.6 or higher
 - **TLP**: Installed and configured on the system
-- **acpi and upower**: You'll need these for battery status
+- `acpi` and `upower`: You'll need these for battery status
 - `tkinter`: Usually comes pre-installed with Python
 - **Root Privileges**: Required to modify TLP settings
 - **TESTED ON FEDORA 41 ONLY**
