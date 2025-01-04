@@ -2,8 +2,6 @@
 
 **Batter** is a simple GUI application designed to manage TLP battery charging thresholds on Linux systems. It allows users to adjust battery start and stop charging percentages to prolong battery health and optimize performance.
 
-- See main branch for source
-
 ## Purpose
 
 The main purpose of Batter is to:
