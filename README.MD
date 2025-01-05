@@ -35,4 +35,4 @@ The main purpose of Batter is to:
    ```bash
    git clone https://github.com/905timur/batter-app.git
    cd batter-app
-   python3 batter```
+   python3 batter
