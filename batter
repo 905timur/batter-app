@@ -6,24 +6,49 @@ import tkinter as tk
 from tkinter import messagebox
 
 def show_about():
-    messagebox.showinfo("About Batter", "Developer: Timur Gabaidulin\nEmail: timur.gab@gmail.com")
+    # Create a new Toplevel window
+    about_window = tk.Toplevel()
+    about_window.title("About Batter")
+    about_window.geometry("400x200")
+    about_window.resizable(False, False)
 
-# Function to apply new TLP settings
+    # Text content for the About section
+    about_text = (
+        "© 2025 Timur Gabaidulin\n"
+        "Email: timur.gab@gmail.com\n"
+        "GitHub: https://www.github.com/905timur\n"
+        "Important Note: Once thresholds are set, the battery will not charge unless the current charge level "
+        "is below the lower threshold."
+    )
+
+    # Add a label with custom font and formatting
+    label = tk.Label(
+        about_window,
+        text=about_text,
+        font=("Arial", 10),  # Arial font, size 10, not bold
+        justify="left",      # Align text to the left
+        wraplength=380       # Wrap text within the window width
+    )
+    label.pack(pady=10, padx=10)
+
+    # Add an OK button to close the window
+    tk.Button(about_window, text="OK", command=about_window.destroy).pack(pady=10)
+
+    # Keep the window focused
+    about_window.transient()  # Set as a temporary child window
+    about_window.grab_set()   # Grab focus to the Toplevel window
+
 def apply_settings(start_threshold, stop_threshold):
     try:
-        # Path to the TLP config file
         tlp_config_path = "/etc/tlp.conf"
 
-        # Check if the user has root permissions
         if os.geteuid() != 0:
             messagebox.showerror("Permission Error", "This program must be run as root.")
             return
 
-        # Read the current TLP config file
         with open(tlp_config_path, "r") as f:
             lines = f.readlines()
 
-        # Update the thresholds in the config file
         updated_lines = []
         for line in lines:
             if line.strip().startswith("START_CHARGE_THRESH_BAT0"):
@@ -33,47 +58,37 @@ def apply_settings(start_threshold, stop_threshold):
             else:
                 updated_lines.append(line)
 
-        # Write the updated configuration back to the file
         with open(tlp_config_path, "w") as f:
             f.writelines(updated_lines)
 
-        # Restart TLP to apply the changes
         subprocess.run(["systemctl", "restart", "tlp"], check=True)
 
-        # Show a success message
         messagebox.showinfo("Success", f"Settings applied successfully:\nStart: {start_threshold}%\nStop: {stop_threshold}%")
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred: {e}")
 
-# Create the GUI
 def create_gui():
-    # Main window
     root = tk.Tk()
     root.title("Batter")
     root.geometry("400x300")
 
-    # Create menubar
     menubar = tk.Menu(root)
     root.config(menu=menubar)
 
-    # Create Info menu
     info_menu = tk.Menu(menubar, tearoff=0)
     menubar.add_cascade(label="Info", menu=info_menu)
     info_menu.add_command(label="About", command=show_about)
 
-    # Start Threshold Label and Dropdown
     tk.Label(root, text="Start Charging Threshold (%)", font=("Arial", 12)).pack(pady=10)
-    start_var = tk.StringVar(value="20")  # Default value
+    start_var = tk.StringVar(value="20")
     start_dropdown = tk.Spinbox(root, from_=0, to=100, textvariable=start_var, width=10, font=("Arial", 12))
     start_dropdown.pack()
 
-    # Stop Threshold Label and Dropdown
     tk.Label(root, text="Stop Charging Threshold (%)", font=("Arial", 12)).pack(pady=10)
-    stop_var = tk.StringVar(value="70")  # Default value
+    stop_var = tk.StringVar(value="70")
     stop_dropdown = tk.Spinbox(root, from_=0, to=100, textvariable=stop_var, width=10, font=("Arial", 12))
     stop_dropdown.pack()
 
-    # Apply Button
     def on_apply():
         start = start_var.get()
         stop = stop_var.get()
@@ -92,9 +107,7 @@ def create_gui():
 
     tk.Button(root, text="Apply Settings", command=on_apply, font=("Arial", 12), bg="green", fg="white").pack(pady=20)
 
-    # Run the GUI loop
     root.mainloop()
 
-# Run the program
 if __name__ == "__main__":
     create_gui()
