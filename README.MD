@@ -6,7 +6,7 @@
 
 The main purpose of Batter is to:
 - Enable users to easily configure battery charging thresholds without manually editing configuration files.
-- Improve battery lifespan by avoiding overcharging and maintaining charge within healthy ranges.
+- Improve battery lifespan by avoiding overcharging and maintaining charge within healthy ranges, *20% and 70% are the generally recommended lower/upper thesholds*.
 
 ## Features
 
@@ -15,6 +15,7 @@ The main purpose of Batter is to:
 - **Immediate Application**: Automatically updates the TLP configuration file and restarts the TLP service to apply changes.
 - **Error Handling**: Provides clear error messages for invalid inputs, permission issues, or unexpected problems.
 - **About Section**: Displays developer information for support.
+- **IMPORTANT NOTE**: The battery *will not* charge if the current charge is *over* the lower threshold, it must be discharged below the lower threshold for the charging to kick in.
 
 ![Batter Interface](interface.png)
 
