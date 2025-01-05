@@ -29,9 +29,9 @@ The main purpose of Batter is to:
 - **Root Privileges**: Required to modify TLP settings
 - **TESTED ON FEDORA 41 ONLY**
 
-## Installation
+## Installation and Use
 
-1. Clone this repository:
+1. Clone repo, navigate to directory, launch batter.
    ```bash
    git clone https://github.com/905timur/batter-app.git
    cd batter-app
